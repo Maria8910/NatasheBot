@@ -36,7 +36,36 @@ try {
     error_log($e->getMessage());
 }*/
 
-echo 'Hello from Render!';
+$token = '7691475160:AAHlJsZwuq3PfKLh8wnyp2q2gGgP_0myAAo'; // Замените на ваш токен
+$url = "https://api.telegram.org/bot{$token}/";
+
+$update = json_decode(file_get_contents('php://input'), true);
+
+if (isset($update['message']['text']) && $update['message']['text'] == '/start') {
+  $chatId = $update['message']['chat']['id'];
+  $response = send_message($chatId, "Привет!");
+  echo $response;
+}
+
+
+function send_message($chatId, $text) {
+  global $url;
+  $data = array(
+    'chat_id' => $chatId,
+    'text' => $text
+  );
+  $options = array(
+    'http' => array(
+      'header'  => "Content-type: application/json\r\n",
+      'method'  => 'POST',
+      'content' => json_encode($data)
+    )
+  );
+  $context  = stream_context_create($options);
+  $result = file_get_contents($url . "sendMessage", false, $context);
+  return $result;
+}
+
 
 ?>
 
