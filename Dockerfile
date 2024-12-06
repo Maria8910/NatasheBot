@@ -1,8 +1,5 @@
 FROM php:8.1-fpm-bullseye
-
-COPY . /var/www/html
-
+COPY index.php /var/www/html/
 WORKDIR /var/www/html
-
-EXPOSE 10000
+EXPOSE 80
 CMD ["php-fpm"]

@@ -1,5 +1,5 @@
 <?php
-
+/*
 require 'vendor/autoload.php';
 
 use Telegram\Bot\Api;
@@ -34,7 +34,9 @@ try {
     }
 } catch (Exception $e) {
     error_log($e->getMessage());
-}
+}*/
+
+echo 'Hello from Render!';
 
 ?>
 
