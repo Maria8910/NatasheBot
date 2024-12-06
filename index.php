@@ -1,11 +1,19 @@
-
 <?php
 
 require 'vendor/autoload.php';
 
 use Telegram\Bot\Api;
 
-$telegram = new Api('7691475160:AAHlJsZwuq3PfKLh8wnyp2q2gGgP_0myAAo'); // Замените на ваш токен
+// Получение токена из переменной окружения
+$telegramBotToken = getenv('TELEGRAM_BOT_TOKEN');
+
+// Проверка, получен ли токен
+if (!$telegramBotToken) {
+    error_log("Токен бота не найден в переменных окружения!");
+    exit(1); // Завершение скрипта с ошибкой
+}
+
+$telegram = new Api($telegramBotToken);
 
 try {
     $updates = $telegram->getWebhookUpdates();
@@ -29,6 +37,4 @@ try {
 }
 
 ?>
-
-
 
