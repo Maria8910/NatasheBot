@@ -13,13 +13,11 @@ ENV PATH="${PATH}:/usr/local/bin"
 
 COPY composer.json composer.lock ./
 
-# Устанавливаем права на директорию ДО COPY всего проекта
-RUN groupadd -g 82 www-data
-RUN useradd -u 82 -g www-data -ms /bin/bash www-data
+# Устанавливаем только права доступа - группа уже существует
 RUN mkdir /var/www/html
 RUN chown -R www-data:www-data /var/www/html
-USER www-data
 
+USER www-data
 
 COPY . /var/www/html
 WORKDIR /var/www/html
@@ -28,4 +26,3 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev --no-progre
 
 EXPOSE 80
 CMD ["php-fpm"]
-
